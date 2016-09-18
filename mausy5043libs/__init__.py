@@ -1,4 +1,4 @@
 #!/usr/bin/env python3
 
-from mausy5043libs import libdaemon3
-from mausy5043libs import libsmart3
+from libdamon3 import Daemon
+from libsmart3 import SmartDisk
