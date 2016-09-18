@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup
+
 setup(name='mausy5043-common-python',
-      version='0.0.1',
-      py_modules=['foo'],
+      version='0.1dev',
+      description='Common Python Utilities from Mausy5043',
+      author='Maurice (mausy5043) Hendrix',
+      url='https://github.com/Mausy5043/mausy5043-common-python',
+      license='MIT',
+      py_modules=['mausy5043libs/libdaemon3.py',
+                  'mausy5043libs/libsmart3.py'
+                  ],
       )
