@@ -8,7 +8,7 @@ setup(name='mausy5043-common-python',
       author='Maurice (mausy5043) Hendrix',
       url='https://github.com/Mausy5043/mausy5043-common-python',
       license='MIT',
-      py_modules=['mausy5043libs/libdaemon3.py',
-                  'mausy5043libs/libsmart3.py'
+      py_modules=['mausy5043libs/libdaemon3',
+                  'mausy5043libs/libsmart3'
                   ],
       )
