@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import atexit
 import os
@@ -121,8 +121,7 @@ class Daemon:
         time.sleep(0.1)
 
     except OSError as err:
-      if err.errno == 3:
-        if os.path.exists(self.pidfile):
+      if (err.errno == 3) and (os.path.exists(self.pidfile)):
           os.remove(self.pidfile)
       else:
         print(str(err))

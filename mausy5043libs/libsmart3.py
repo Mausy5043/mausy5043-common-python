@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 
@@ -38,6 +38,9 @@ class SmartDisk():
     self.identity = retm + " || " + retd + " (" + rets + ")"
 
   def smart(self):
+    """
+    Read the various .dat files
+    """
     self.vars     = self.cat(self.diskid + "-A.dat").splitlines()
     self.health   = self.cat(self.diskid + "-H.dat")
     self.selftest = self.cat(self.diskid + "-l.dat")
@@ -61,6 +64,9 @@ class SmartDisk():
     return 0
 
   def getdata(self, id):
+    """
+    Retrieve disk data for <id>
+    """
     ret = ""
     for line in self.vars:
       if (line != ''):
@@ -72,15 +78,27 @@ class SmartDisk():
     return ret
 
   def gethealth(self):
+    """
+    Retrieve disk health info
+    """
     return self.health
 
   def getlasttest(self):
+    """
+    Retrieve disk last test info
+    """
     return self.selftest
 
   def getinfo(self):
+    """
+    Retrieve disk identity
+    """
     return self.identity
 
   def cat(self, filename):
+    """
+    Return the contents of <filename>
+    """
     ret = ""
     if os.path.isfile(filename):
       with open(filename, 'r') as f:
