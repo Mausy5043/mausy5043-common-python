@@ -9,7 +9,8 @@ setup(name='mausy5043-common-python',
       author_email='undisclosed@example.com',
       url='https://github.com/Mausy5043/mausy5043-common-python',
       license='MIT',
-      py_modules=['mausy5043libs/libdaemon3',
+      py_modules=[`mausy5043libs/__init__',
+                  'mausy5043libs/libdaemon3',
                   'mausy5043libs/libsmart3'
                   ],
       )
