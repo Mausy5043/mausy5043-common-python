@@ -38,6 +38,7 @@ class MyDaemon(Daemon):
         if (waittime > 0):
           syslog_trace("Waiting  : {0}s".format(waittime), False, DEBUG)
           syslog_trace("................................", False, DEBUG)
+          syslog_trace("..still alive..", syslog.LOG_DEBUG, False)
           time.sleep(waittime)
       except Exception:
         syslog_trace("Unexpected error in run()", syslog.LOG_CRIT, DEBUG)
