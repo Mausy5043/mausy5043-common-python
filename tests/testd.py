@@ -16,10 +16,14 @@ IS_JOURNALD = os.path.isfile('/bin/journalctl')
 MYAPP       = os.path.realpath(__file__).split('/')[-2]
 NODE        = os.uname()[1]
 
+# initialise logging
+syslog.openlog(ident=MYAPP, facility=syslog.LOG_LOCAL0)
+
 class MyDaemon(Daemon):
-  """Definition of daemon."""
+  """Definition of daemon"""
   @staticmethod
   def run():
+    """Execute a simple cycle to simulate a daemonprocess"""
     reporttime      = 60
     samplespercycle = 3
     sampletime      = reporttime/samplespercycle    # time [s] between samples
@@ -46,7 +50,7 @@ class MyDaemon(Daemon):
         raise
 
 def syslog_trace(trace, logerr, out2console):
-  # Log a python stack trace to syslog
+  """Log a python stack trace to syslog"""
   log_lines = trace.split('\n')
   for line in log_lines:
     if line and logerr:
