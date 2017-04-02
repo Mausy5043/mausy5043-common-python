@@ -13,7 +13,6 @@ from mausy5043libs.libdaemon3 import Daemon
 # constants
 DEBUG       = False
 IS_JOURNALD = os.path.isfile('/bin/journalctl')
-MYID        = "".join(list(filter(str.isdigit, os.path.realpath(__file__).split('/')[-1])))
 MYAPP       = os.path.realpath(__file__).split('/')[-2]
 NODE        = os.uname()[1]
 
@@ -24,11 +23,10 @@ class MyDaemon(Daemon):
     reporttime      = 60
     samplespercycle = 3
     sampletime      = reporttime/samplespercycle    # time [s] between samples
-    syslog_trace("DEBUG       : {0}".format(DEBUG), False, DEBUG)
-    syslog_trace("IS_JOURNALD : {0}".format(IS_JOURNALD), False, DEBUG)
-    syslog_trace("MYID        : {0}".format(MYID), False, DEBUG)
-    syslog_trace("MYAPP       : {0}".format(MYAPP), False, DEBUG)
-    syslog_trace("NODE        : {0}".format(NODE), False, DEBUG)
+    syslog_trace("DEBUG       : {0}".format(DEBUG), syslog.LOG_DEBUG, DEBUG)
+    syslog_trace("IS_JOURNALD : {0}".format(IS_JOURNALD), syslog.LOG_DEBUG, DEBUG)
+    syslog_trace("MYAPP       : {0}".format(MYAPP), syslog.LOG_DEBUG, DEBUG)
+    syslog_trace("NODE        : {0}".format(NODE), syslog.LOG_DEBUG, DEBUG)
 
     while True:
       try:
@@ -57,7 +55,7 @@ def syslog_trace(trace, logerr, out2console):
 
 
 if __name__ == "__main__":
-  daemon = MyDaemon('/tmp/' + MYID + '.pid')
+  daemon = MyDaemon('/tmp/test.pid')
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()
