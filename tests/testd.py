@@ -24,6 +24,11 @@ class MyDaemon(Daemon):
     reporttime      = 60
     samplespercycle = 3
     sampletime      = reporttime/samplespercycle    # time [s] between samples
+    syslog_trace("DEBUG       : {0}".format(DEBUG), False, DEBUG)
+    syslog_trace("IS_JOURNALD : {0}".format(IS_JOURNALD), False, DEBUG)
+    syslog_trace("MYID        : {0}".format(MYID), False, DEBUG)
+    syslog_trace("MYAPP       : {0}".format(MYAPP), False, DEBUG)
+    syslog_trace("NODE        : {0}".format(NODE), False, DEBUG)
 
     while True:
       try:
