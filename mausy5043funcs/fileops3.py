@@ -7,6 +7,17 @@ Provides file operation functions.
 import os
 import syslog
 
+def cat(fname):
+  """
+  Read a file (line-by-line) into a variable.
+  Return the variable.
+  """
+  ret = ""
+  if os.path.isfile(fname):
+    with open(fname, 'r') as fin:
+      ret = fin.read().strip('\n')
+  return ret
+
 def lock(fname):
   """
   Create a lockfile
