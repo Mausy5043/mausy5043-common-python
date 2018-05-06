@@ -16,6 +16,7 @@ class Daemon:
                stdin='/dev/null',
                stdout='/dev/null',
                stderr='/dev/null'):
+    self.version = 3
     self.stdin   = stdin
     self.stdout  = stdout
     self.stderr  = stderr

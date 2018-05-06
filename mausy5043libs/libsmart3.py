@@ -1,4 +1,5 @@
 import os
+import sys
 
 DEBUG = False
 leaf = os.path.realpath(__file__).split('/')[-2]
@@ -15,6 +16,7 @@ class SmartDisk():
     see example code at bottom of this file.
   """
   def __init__(self, diskid):
+    self.version = 3
     self.diskid   = "/tmp/" + leaf + "/smartinfo-" + diskid
     self.id       = diskid
     self.vars     = "-"
@@ -111,6 +113,8 @@ if __name__ == '__main__':
 
   print("**** Initialisation ****")
   sda = SmartDisk("wwn-0x50026b723c0d6dd5")
+  if (sda.version != 3):
+    sys.exit("WRONG VERSION")
   print(" ")
   print("**** smart() ****")
   sda.smart()

@@ -61,6 +61,8 @@ def syslog_trace(trace, logerr, out2console):
 
 if __name__ == "__main__":
   daemon = MyDaemon('/tmp/test.pid')
+  if (daemon.version != 3):
+    sys.exit("WRONG VERSION")
   if len(sys.argv) == 2:
     if 'start' == sys.argv[1]:
       daemon.start()
