@@ -45,25 +45,19 @@ class SqlDataFetch(object):
     self.claimcmd       = semaphore_path + '/bin/claim'
     self.checkcmd       = semaphore_path + '/bin/check'
     self.releasecmd     = semaphore_path + '/bin/release'
-    self.cmd[self.h_ptr]          = query_path + '/hour.sh'
-    self.updatetime[self.h_ptr]   = h_time * 60
-    self.timer[self.h_ptr]        = time.time() + rnd(60, self.updatetime[self.h_ptr])
-    self.cmd[self.d_ptr]          = query_path + '/day.sh'
-    self.updatetime[self.d_ptr]   = d_time * 60
-    self.timer[self.d_ptr]        = time.time() + rnd(60, self.updatetime[self.d_ptr])
-    self.cmd[self.w_ptr]          = query_path + '/week.sh'
-    self.updatetime[self.w_ptr]   = w_time * 3600
-    self.timer[self.w_ptr]        = time.time() + rnd(60, self.updatetime[self.w_ptr])
-    self.cmd[self.y_ptr]          = query_path + '/year.sh'
-    self.updatetime[self.y_ptr]   = y_time * 3600
-    self.timer[self.y_ptr]        = time.time() + rnd(60, self.updatetime[self.y_ptr])
+    self.querycmd          = [query_path + '/hour.sh', query_path + '/day.sh', query_path + '/week.sh', query_path + '/year.sh']
+    self.updatetime   = [h_time * 60, d_time * 60, w_time * 3600, y_time * 3600]
+    self.timer        = [time.time() + rnd(60, self.updatetime[self.h_ptr]),
+                         time.time() + rnd(60, self.updatetime[self.d_ptr]),
+                         time.time() + rnd(60, self.updatetime[self.w_ptr]),
+                         time.time() + rnd(60, self.updatetime[self.y_ptr])]
 
   def get(self, ptr):
     """
     Get the requested data now.
     """
-    mf.syslog_trace("...:  {0}".format(self.cmd[ptr]), False, DEBUG)
-    subprocess.call(self.cmd[ptr])
+    mf.syslog_trace("...:  {0}".format(self.querycmd[ptr]), False, DEBUG)
+    subprocess.call(self.querycmd[ptr])
 
   def fetch(self):
     """
