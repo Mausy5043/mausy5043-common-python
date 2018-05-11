@@ -12,6 +12,8 @@ setup(name='mausy5043-common-python',
       py_modules=['mausy5043libs/__init__',
                   'mausy5043libs/libdaemon3',
                   'mausy5043libs/libsmart3',
+                  'mausy5043libs/libgraph3',
+                  'mausy5043libs/libsqldata3',
                   'mausy5043funcs/__init__',
                   'mausy5043funcs/fileops3'
                   ],
