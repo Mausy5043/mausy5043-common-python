@@ -15,8 +15,9 @@ class SmartDisk():
 
     see example code at bottom of this file.
   """
-  def __init__(self, diskid):
-    self.version = 3
+  def __init__(self, diskid, dbg=False):
+    self.DEBUG    = dbg
+    self.version  = 3
     self.diskid   = "/tmp/" + leaf + "/smartinfo-" + diskid
     self.id       = diskid
     self.vars     = "-"
@@ -25,7 +26,7 @@ class SmartDisk():
     self.identity = cat(self.diskid + "-i.dat").splitlines()
     retm = retd = rets = ""
     for line in self.identity:
-      if DEBUG:
+      if self.DEBUG:
         print(line)
       if (line != ''):
         ls = line.split()
@@ -47,7 +48,7 @@ class SmartDisk():
     self.identity = cat(self.diskid + "-i.dat").splitlines()
     retm = retd = rets = ""
     for line in self.identity:
-      if DEBUG:
+      if self.DEBUG:
         print(line)
       if (line != ''):
         ls = line.split()
@@ -59,7 +60,7 @@ class SmartDisk():
           rets = line.split(': ')[1].strip()
     self.identity = retm + " || " + retd + " (" + rets + ")"
 
-    if DEBUG:
+    if self.DEBUG:
       print(self.identity)
     return 0
 
@@ -72,7 +73,7 @@ class SmartDisk():
       if (line != ''):
         ls = line.split()
         if (ls[0] == id):
-          if DEBUG:
+          if self.DEBUG:
             print(line.split())
           ret = ls[9]
     return ret
@@ -112,7 +113,7 @@ if __name__ == '__main__':
   DEBUG = True
 
   print("**** Initialisation ****")
-  sda = SmartDisk("wwn-0x50026b723c0d6dd5")
+  sda = SmartDisk("wwn-0x50026b723c0d6dd5", DEBUG)
   if (sda.version != 3):
     sys.exit("WRONG VERSION")
   print(" ")

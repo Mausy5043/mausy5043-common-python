@@ -18,8 +18,9 @@ class Graph(object):
                 eg.: "/home/pi/lnxdiagd/mkgraphs.sh"
     updatetime  number of minutes between successive calls to the script
   """
-  def __init__(self, script, updatetime):
+  def __init__(self, script, updatetime, dbg=False):
     super(Graph, self).__init__()
+    self.DEBUG      = dbg
     self.home       = os.environ['HOME']
     self.version    = 3.0
     self.updatetime = updatetime * 60
@@ -28,7 +29,7 @@ class Graph(object):
 
   def __draw(self):
     """Draw the graphs now"""
-    mf.syslog_trace("...:  {0}".format(self.command), False, DEBUG)
+    mf.syslog_trace("...:  {0}".format(self.command), False, self.DEBUG)
     return subprocess.call(self.command)
 
   def make(self):
@@ -47,6 +48,6 @@ if __name__ == '__main__':
   DEBUG = True
 
   print("**** Initialisation ****")
-  trendgraph = Graph(3)
+  trendgraph = Graph(3, DEBUG)
   if (trendgraph.version != 3.0):
     sys.exit("WRONG VERSION")

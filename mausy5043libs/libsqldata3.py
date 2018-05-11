@@ -30,12 +30,13 @@ class SqlDataFetch(object):
     w_time      number of *hours* between successive calls to the week.sh script
     y_time      number of *hours* between successive calls to the year.sh script
   """
-  def __init__(self, query_path, semaphore_path, h_time, d_time, w_time, y_time):
+  def __init__(self, query_path, semaphore_path, h_time, d_time, w_time, y_time, dbg=False):
     super(SqlDataFetch, self).__init__()
+    self.DEBUG          = dbg
     if query_path.endswith('/'):
-      query_path = query_path[:-1]
+      query_path        = query_path[:-1]
     if semaphore_path.endswith('/'):
-      semaphore_path = semaphore_path[:-1]
+      semaphore_path    = semaphore_path[:-1]
     self.home           = os.environ['HOME']
     self.version        = 3.0
     self.h_ptr          = 0
@@ -45,18 +46,18 @@ class SqlDataFetch(object):
     self.claimcmd       = semaphore_path + '/bin/claim'
     self.checkcmd       = semaphore_path + '/bin/check'
     self.releasecmd     = semaphore_path + '/bin/release'
-    self.querycmd          = [query_path + '/hour.sh', query_path + '/day.sh', query_path + '/week.sh', query_path + '/year.sh']
-    self.updatetime   = [h_time * 60, d_time * 60, w_time * 3600, y_time * 3600]
-    self.timer        = [time.time(),
-                         time.time(),
-                         time.time(),
-                         time.time()]
+    self.querycmd       = [query_path + '/hour.sh', query_path + '/day.sh', query_path + '/week.sh', query_path + '/year.sh']
+    self.updatetime     = [h_time * 60, d_time * 60, w_time * 3600, y_time * 3600]
+    self.timer          = [time.time(),
+                           time.time(),
+                           time.time(),
+                           time.time()]
 
   def __get(self, ptr):
     """
     Get the requested data now.
     """
-    mf.syslog_trace("...:  {0}".format(self.querycmd[ptr]), False, DEBUG)
+    mf.syslog_trace("...:  {0}".format(self.querycmd[ptr]), False, self.DEBUG)
     subprocess.call(self.querycmd[ptr])
 
   def fetch(self):
@@ -68,7 +69,7 @@ class SqlDataFetch(object):
 
     while True:
       ack = self.check_server()
-      mf.syslog_trace("...:  {0}".format(ack), False, DEBUG)
+      mf.syslog_trace("...:  {0}".format(ack), False, self.DEBUG)
       if (ack <= 1):
         break
       time.sleep(3)
@@ -85,15 +86,15 @@ class SqlDataFetch(object):
     return ack
 
   def claim_server(self):
-    mf.syslog_trace("...:  CLAIM", False, DEBUG)
+    mf.syslog_trace("...:  CLAIM", False, self.DEBUG)
     return subprocess.call(self.claimcmd)
 
   def check_server(self):
-    mf.syslog_trace("...:  CHECK", False, DEBUG)
+    mf.syslog_trace("...:  CHECK", False, self.DEBUG)
     return subprocess.call(self.checkcmd)
 
   def release_server(self):
-    mf.syslog_trace("...:  RELEASE", False, DEBUG)
+    mf.syslog_trace("...:  RELEASE", False, self.DEBUG)
     return subprocess.call(self.releasecmd)
 
 
@@ -102,7 +103,7 @@ if __name__ == '__main__':
   DEBUG = True
 
   print("**** Initialisation ****")
-  sqldata = SqlDataFetch("/tmp", "/srv", 1, 1, 1, 1)
+  sqldata = SqlDataFetch("/tmp", "/srv", 1, 1, 1, 1, DEBUG)
   if (sqldata.version != 3.0):
     sys.exit("WRONG VERSION")
   print("OK")
