@@ -23,10 +23,10 @@ class Graph(object):
     self.home       = os.environ['HOME']
     self.version    = 3.0
     self.updatetime = updatetime * 60
-    self.timer      = time.time() + rnd(60, self.updatetime)
+    self.timer      = time.time()
     self.command    = script
 
-  def draw(self):
+  def __draw(self):
     """Draw the graphs now"""
     mf.syslog_trace("...:  {0}".format(self.command), False, DEBUG)
     return subprocess.call(self.command)
@@ -36,7 +36,7 @@ class Graph(object):
     t0 = time.time()
     result = 1
     if t0 >= self.timer:
-      result = self.draw()
+      result = self.__draw()
       t1 = time.time()
       self.timer = t1 + self.updatetime + rnd(-60, 60)
     return result

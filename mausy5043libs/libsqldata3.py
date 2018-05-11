@@ -47,12 +47,12 @@ class SqlDataFetch(object):
     self.releasecmd     = semaphore_path + '/bin/release'
     self.querycmd          = [query_path + '/hour.sh', query_path + '/day.sh', query_path + '/week.sh', query_path + '/year.sh']
     self.updatetime   = [h_time * 60, d_time * 60, w_time * 3600, y_time * 3600]
-    self.timer        = [time.time() + rnd(60, self.updatetime[self.h_ptr]),
-                         time.time() + rnd(60, self.updatetime[self.d_ptr]),
-                         time.time() + rnd(60, self.updatetime[self.w_ptr]),
-                         time.time() + rnd(60, self.updatetime[self.y_ptr])]
+    self.timer        = [time.time(),
+                         time.time(),
+                         time.time(),
+                         time.time()]
 
-  def get(self, ptr):
+  def __get(self, ptr):
     """
     Get the requested data now.
     """
@@ -77,7 +77,7 @@ class SqlDataFetch(object):
       t0 = time.time()
       for ptr in range(4):
         if t0 >= self.timer[ptr]:
-          self.get(ptr)
+          self.__get(ptr)
           self.timer[ptr] = t0 + self.updatetime[ptr] + rnd(-60, 60)
 
     self.release_server()
