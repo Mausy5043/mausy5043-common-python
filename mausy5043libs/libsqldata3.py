@@ -86,15 +86,24 @@ class SqlDataFetch(object):
     return ack
 
   def claim_server(self):
-    mf.syslog_trace("...:  CLAIM", False, self.DEBUG)
+    """
+    Call the CLAIM command
+    """
+    mf.syslog_trace("...       :  CLAIM", False, self.DEBUG)
     return subprocess.call(self.claimcmd)
 
   def check_server(self):
-    mf.syslog_trace("...:  CHECK", False, self.DEBUG)
+    """
+    Call the CHECK command
+    """
+    mf.syslog_trace("...       :  CHECK", False, self.DEBUG)
     return subprocess.call(self.checkcmd)
 
   def release_server(self):
-    mf.syslog_trace("...:  RELEASE", False, self.DEBUG)
+    """
+    Call the RELEASE command
+    """
+    mf.syslog_trace("...       :  RELEASE", False, self.DEBUG)
     return subprocess.call(self.releasecmd)
 
 
