@@ -10,8 +10,8 @@ DEBUG = False
 
 class Graph(object):
   """
-  Graph:
-  Executes the script to create trendgraphs
+  class Graph:
+  Executes the <script> to create trendgraphs
 
   Takes these initialisation parameters:
     script      absolute path to where the graphing script can be found
@@ -28,12 +28,17 @@ class Graph(object):
     self.command    = script
 
   def __draw(self):
-    """Draw the graphs now"""
-    mf.syslog_trace("...:  {0}".format(self.command), False, self.DEBUG)
+    """
+    Draw the graphs.
+    Now!
+    """
+    mf.syslog_trace("...drawing :  {0}".format(self.command), False, self.DEBUG)
     return subprocess.call(self.command)
 
   def make(self):
-    """Manage staleness of graphs and draw them when needed"""
+    """
+    Manage staleness of graphs and draw them when needed.
+    """
     t0 = time.time()
     result = 1
     if t0 >= self.timer:
@@ -48,6 +53,6 @@ if __name__ == '__main__':
   DEBUG = True
 
   print("**** Initialisation ****")
-  trendgraph = Graph(3, DEBUG)
+  trendgraph = Graph("/tmp/script", 3, DEBUG)
   if (trendgraph.version != 3.0):
     sys.exit("WRONG VERSION")
